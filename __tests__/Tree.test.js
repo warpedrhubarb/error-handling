@@ -1,4 +1,4 @@
-import Tree from '../src/Tree.js';
+import Tree from '../src/Tree';
 
 describe('Tree', () => {
   let tree;
