@@ -1,0 +1,23 @@
+{
+  "type": "module",
+  "scripts": {
+    "test": "npx -n --experimental-vm-modules -n --no-warnings jest --colors"
+  },
+  "jest": {
+    "testEnvironment": "node"
+  },
+  "name": "errors-practice",
+  "version": "0.0.1",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/warpedrhubarb/errors-practice.git"
+  },
+  "author": "warpedrhubarb",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/warpedrhubarb/errors-practice/issues"
+  },
+  "homepage": "https://github.com/warpedrhubarb/errors-practice#readme",
+  "description": ""
+}
