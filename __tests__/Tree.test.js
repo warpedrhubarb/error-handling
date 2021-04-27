@@ -64,4 +64,3 @@ describe('Tree', () => {
     expect(dirs).toEqual(['var', 'etc', 'home']);
   });
 });
-
