@@ -1,6 +1,6 @@
 import path from 'path';
+import errors from 'errno';
 import Tree from './Tree';
-
 import Dir from './Dir';
 import File from './File';
 
@@ -14,9 +14,47 @@ export default class {
   statSync(filepath) {
     const current = this.findNode(filepath);
     if (!current) {
-      return null;
+      return [null, errors.code.ENOENT];
     }
-    return current.getMeta().getStats();
+    return [current.getMeta().getStats(), null];
+  }
+
+  unlinkSync(filepath) {
+    const current = this.findNode(filepath);
+    if (!current) {
+      return [null, errors.code.ENOENT];
+    }
+    if (current.getMeta().isDirectory()) {
+      return [null, errors.code.EPERM];
+    }
+    return [current.getParent().removeChild(current.getKey()), null];
+  }
+
+  writeFileSync(filepath, content) {
+    const { base, dir } = path.parse(filepath);
+    const parent = this.findNode(dir);
+    if (!parent) {
+      return [null, errors.code.ENOENT];
+    }
+    if (!parent.getMeta().isDirectory()) {
+      return [null, errors.code.ENOTDIR];
+    }
+    const current = parent.getChild(base);
+    if (current && current.getMeta().isDirectory()) {
+      return [null, errors.code.EISDIR];
+    }
+    return [parent.addChild(base, new File(base, content)), null];
+  }
+
+  readFileSync(filepath) {
+    const current = this.findNode(filepath);
+    if (!current) {
+      return [null, errors.code.ENOENT];
+    }
+    if (!current.getMeta().isFile()) {
+      return [null, errors.code.EISDIR];
+    }
+    return [current.getMeta().getBody(), null];
   }
 
   mkdirSync(filepath) {
@@ -45,20 +83,25 @@ export default class {
 
   readdirSync(filepath) {
     const current = this.findNode(filepath);
-    if (!current || !current.getMeta().isDirectory()) {
-      return false;
+    if (!current) {
+      return [null, errors.code.ENOENT];
     }
-    return current.getChildren()
-      .map((child) => child.getKey());
+    if (!current.getMeta().isDirectory()) {
+      return [null, errors.code.ENOTDIR];
+    }
+    return [current.getChildren().map((child) => child.getKey()), null];
   }
 
   touchSync(filepath) {
     const { base, dir } = path.parse(filepath);
     const parent = this.findNode(dir);
-    if (!parent || !parent.getMeta().isDirectory()) {
-      return false;
+    if (!parent) {
+      return [null, errors.code.ENOENT];
     }
-    return parent.addChild(base, new File(base, ''));
+    if (!parent.getMeta().isDirectory()) {
+      return [null, errors.code.ENOTDIR];
+    }
+    return [parent.addChild(base, new File(base, '')), null];
   }
 
   rmdirSync(filepath) {
