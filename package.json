@@ -1,5 +1,24 @@
 {
   "type": "module",
+  "name": "errors-practice",
+  "description": "Immutable virtual filesystem (error handling)",
+  "version": "0.0.1",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/warpedrhubarb/errors-practice.git"
+  },
+  "author": "Maksim S",
+  "bugs": {
+    "url": "https://github.com/warpedrhubarb/errors-practice/issues"
+  },
+  "homepage": "https://github.com/warpedrhubarb/errors-practice#readme",
+  "scripts": {
+    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js --colors"
+  },
+  "jest": {
+    "transform": {},
+    "testEnvironment": "node"
+  },
   "devDependencies": {
     "eslint": "^7.23.0",
     "eslint-config-airbnb-base": "^14.2.1",
@@ -10,25 +29,5 @@
     "@hexlet/trees": "^0.7.1",
     "@types/jest": "^26.0.19",
     "errno": "*"
-  },
-  "scripts": {
-    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js --colors"
-  },
-  "jest": {
-    "transform": {},
-    "testEnvironment": "node"
-  },
-  "name": "errors-practice",
-  "version": "0.0.1",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/warpedrhubarb/errors-practice.git"
-  },
-  "author": "warpedrhubarb",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/warpedrhubarb/errors-practice/issues"
-  },
-  "homepage": "https://github.com/warpedrhubarb/errors-practice#readme",
-  "description": ""
+  }
 }
